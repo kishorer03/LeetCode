@@ -10,16 +10,11 @@ class Solution {
         for(int j=0;j<nums.length;j++){
             if(nums[j]==max){
                 ++continuous;
+                temp=continuous>temp?continuous:temp;
             }else{
-                if(continuous>temp){
-                    temp=continuous;
-                }
                 continuous=0;
             }
         }
-        if(continuous>temp){
-                    temp=continuous;
-                }
         return temp;
     }
 }
