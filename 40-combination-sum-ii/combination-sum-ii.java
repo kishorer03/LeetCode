@@ -1,28 +1,32 @@
 class Solution {
-    public void recursion(int[] candidates, int target, int i, List<Integer> lst, List<List<Integer>> ret, int sum) {
-        if (sum == target) {
+    public void recursion(int[] arr,int i,List<Integer> lst,int target,List<List<Integer>> ret){
+        if(target==0){
             ret.add(new ArrayList<>(lst));
             return;
         }
-        if (sum > target || i == candidates.length) {
+        if(i==arr.length){
             return;
         }
-        
-        for (int j = i; j < candidates.length; j++) {
-            if (j > i && candidates[j] == candidates[j - 1]) {
+        for(int j=i;j<arr.length;j++){
+            if(target<0){
+                break;
+            }
+            if(j>i && arr[i]==arr[j]){
                 continue;
             }
-            
-            lst.add(candidates[j]);
-            recursion(candidates, target, j + 1, lst, ret, sum + candidates[j]);
-            lst.remove(lst.size() - 1);
+            lst.add(arr[j]);
+            target-=arr[j];
+            recursion(arr,j+1,lst,target,ret);
+            target+=arr[j];
+            lst.remove(lst.size()-1);
         }
     }
-
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        List<List<Integer>> ret = new ArrayList<>();
+        List<List<Integer>> ret=new ArrayList<>();
         Arrays.sort(candidates);
-        recursion(candidates, target, 0, new ArrayList<>(), ret, 0);
-        return ret;
+        recursion(candidates,0,new ArrayList<>(),target,ret);
+        Set<List<Integer>> set=new HashSet<>(ret);
+
+        return new ArrayList<List<Integer>>(set);
     }
 }
