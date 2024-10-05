@@ -8,7 +8,7 @@ class Solution {
             return;
         }
         for(int j=i;j<arr.length;j++){
-            if(j>i && arr[i]==arr[j]){
+            if(j>i && arr[j-1]==arr[j]){
                 continue;
             }
             lst.add(arr[j]);
@@ -20,8 +20,6 @@ class Solution {
         List<List<Integer>> ret=new ArrayList<>();
         Arrays.sort(candidates);
         recursion(candidates,0,new ArrayList<>(),target,ret);
-        Set<List<Integer>> set=new HashSet<>(ret);
-
-        return new ArrayList<List<Integer>>(set);
+        return ret;
     }
 }
