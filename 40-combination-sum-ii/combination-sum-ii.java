@@ -12,9 +12,7 @@ class Solution {
                 continue;
             }
             lst.add(arr[j]);
-            target-=arr[j];
-            recursion(arr,j+1,lst,target,ret);
-            target+=arr[j];
+            recursion(arr,j+1,lst,target-arr[j],ret);
             lst.remove(lst.size()-1);
         }
     }
