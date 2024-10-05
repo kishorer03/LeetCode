@@ -4,13 +4,10 @@ class Solution {
             ret.add(new ArrayList<>(lst));
             return;
         }
-        if(i==arr.length){
+        if(i==arr.length || target<0){
             return;
         }
         for(int j=i;j<arr.length;j++){
-            if(target<0){
-                break;
-            }
             if(j>i && arr[i]==arr[j]){
                 continue;
             }
