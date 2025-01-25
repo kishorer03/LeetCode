@@ -10,12 +10,10 @@ class Solution {
         }
         ++count;
         System.out.println(count);
-        if(count==k){
+        if(count<=k){
             return 0;
-        }else if(count>k){
-            return -1;
         }else{
-            return 1;
+            return -1;
         }
     }
     public int splitArray(int[] nums, int k) {
@@ -31,9 +29,6 @@ class Solution {
             mid=(i+j)/2;
             temp=fun(nums,k,mid);
             if(temp==0){
-                ret=mid;
-                j=mid-1;
-            }else if(temp==1){
                 ret=mid;
                 j=mid-1;
             }else{
