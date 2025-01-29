@@ -6,12 +6,12 @@ class Solution {
             if(s.charAt(i)=='('){
                 ++count;
                 if(count>1){
-                    str.append(s.charAt(i));
+                    str.append('(');
                 }
             }else{
                 --count;
                 if(count>0){
-                    str.append(s.charAt(i));
+                    str.append(')');
                 }
             }
         }
