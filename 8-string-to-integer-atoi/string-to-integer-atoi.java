@@ -1,31 +1,31 @@
 class Solution {
     public int myAtoi(String s) {
-        
-        int i=0,max=Integer.MAX_VALUE,min=Integer.MIN_VALUE,sym=1;
-        long ret=0;
-        char[] arr=s.trim().toCharArray();
-        if(arr.length==0){
-            return 0;
+        int itr=0;
+        while(itr<s.length() && s.charAt(itr)==' ') itr++;
+        int sign=1;
+        if(itr<s.length() && s.charAt(itr)=='-'){
+            sign=-1;
+            itr++;
+        }else if(itr<s.length() && s.charAt(itr)=='+'){
+            sign=1;
+            itr++;
         }
-        if(arr[i]=='-' || arr[i]=='+'){
-            sym=arr[i]=='-'?-1:1;
-            i++;
-        }
-        
-        while(i<arr.length){
-            if(arr[i]>=48 && arr[i]<=57){
-                ret=(ret*10)+(arr[i]-48);
-                if(ret>max && sym==1){
-                    return max;
-                }
-                if((long)max+1<ret && sym==-1){
-                    return min;
-                }
+        while(itr<s.length() && s.charAt(itr)=='0') itr++;
+        long ans=0;
+        while(itr<s.length()){
+            char ch=s.charAt(itr);
+            if(ch>='0' && ch<='9'){
+                int digit=ch-'0';
+                ans=ans*10+digit;
+                if(ans>Integer.MAX_VALUE && sign==1){
+                    return Integer.MAX_VALUE;
+                }else if(ans>Integer.MAX_VALUE &&sign==-1) return Integer.MIN_VALUE;
             }else{
                 break;
             }
-            i++;
+            itr++;
         }
-        return (int)ret*sym;
+        return (int)(ans*sign);
+        
     }
 }
