@@ -1,18 +1,18 @@
 class Solution {
-    public void recursion(int[] nums,int x,List<List<Integer>> ret,List<Integer> lst){
-        ret.add(new ArrayList<>(lst));
-        if(x==nums.length){
+    public void generate(List<Integer> inner,List<List<Integer>> outer,int i,int[] arr){
+        if(i==arr.length){
+            outer.add(new ArrayList<Integer>(inner));
             return;
         }
-        for(int i=x;i<nums.length;i++){
-            lst.add(nums[i]);
-            recursion(nums,i+1,ret,lst);
-            lst.remove(lst.size()-1);
-        }
+        inner.add(arr[i]);
+        
+        generate(inner,outer,i+1,arr);
+        inner.remove(inner.size()-1);
+        generate(inner,outer,i+1,arr);
     }
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> ret=new ArrayList<>();
-        recursion(nums,0,ret,new ArrayList<>());
-        return ret;
+        List<List<Integer>> lst=new ArrayList<List<Integer>>();
+        generate(new ArrayList<Integer>(),lst,0,nums);
+        return lst;
     }
 }
