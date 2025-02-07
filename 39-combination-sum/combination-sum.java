@@ -1,24 +1,20 @@
 class Solution {
-    public void recursion(int[] arr,int i,int t,int sum,List<Integer> lst,List<List<Integer>> ret){
-        if(sum>t){
+    public void solve(int[] arr,int i,int sum,int t,List<Integer> inner,List<List<Integer>> outer){
+        if(i==arr.length || sum>t){
             return;
         }
-        if(i==arr.length){
-            if(sum==t){
-                ret.add(new ArrayList<>(lst));
-            }
+        if(sum==t){
+            outer.add(new ArrayList<Integer>(inner));
             return;
         }
-        sum+=arr[i];
-        lst.add(arr[i]);
-        recursion(arr,i,t,sum,lst,ret);
-        sum-=arr[i];
-        lst.remove(lst.size()-1);
-        recursion(arr,i+1,t,sum,lst,ret);
+        inner.add(arr[i]);
+        solve(arr,i,sum+arr[i],t,inner,outer);
+        inner.remove(inner.size()-1);
+        solve(arr,i+1,sum,t,inner,outer);
     }
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> ret=new ArrayList<>();
-        recursion(candidates,0,target,0,new ArrayList<>(),ret);
-        return ret;
+        List<List<Integer>> lst= new ArrayList<List<Integer>>();
+        solve(candidates,0,0,target,new ArrayList<Integer>(),lst);
+        return lst;
     }
 }
