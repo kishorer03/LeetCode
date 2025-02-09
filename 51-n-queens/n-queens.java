@@ -1,36 +1,51 @@
 class Solution {
-    public void possibleQueens(char[][] board,int n,int col,List<List<String>> ret,boolean[] left,boolean[] leftbot,boolean[] leftabo){
-        if(col==n){
-            List<String> str=new ArrayList<>();
-            for(char[] ch:board){
-                str.add(new String(ch));
+    public boolean isNotSafe(int r,int c,int[][] arr){
+        int i=r,j=c;
+        while(i>=0 && j>=0){
+            if(arr[i--][j--]==1){
+                return true;
             }
-            ret.add(str);
+        }
+        i=r;j=c;
+        while(i>=0 && j<arr[0].length){
+            if(arr[i--][j++]==1){
+                return true;
+            }
+        }
+        return false;
+    }
+    public void solve(int row,int n,int[] top,int[][] arr,List<List<String>> lst){
+        if(row==n){
+            List<String> dum=new ArrayList<String>(); 
+            for(int i=0;i<n;i++){
+                StringBuilder sb=new StringBuilder();
+                for(int j=0;j<n;j++){
+                    if(arr[i][j]==1){
+                        sb.append('Q');
+                    }else{
+                        sb.append('.');
+                    }
+                }
+                dum.add(sb.toString());
+            }
+            lst.add(dum);
             return;
         }
         for(int i=0;i<n;i++){
-            if(!(left[i] || leftbot[i+col] || leftabo[n-1+i-col])){
-                left[i]=true;leftbot[i+col]=true;
-                leftabo[n-1+i-col]=true;
-                board[i][col]='Q';
-                possibleQueens(board,n,col+1,ret,left,leftbot,leftabo);
-                left[i]=false;leftbot[i+col]=false;leftabo[n-1+i-col]=false;
-                board[i][col]='.';
+            if(top[i]==1 || isNotSafe(row,i,arr)){
+                continue;
             }
+            top[i]=1;
+            arr[row][i]=1;
+            solve(row+1,n,top,arr,lst);
+            top[i]=0;
+            arr[row][i]=0;
         }
     }
     public List<List<String>> solveNQueens(int n) {
-        List<List<String>> ret=new ArrayList<>();
-        char[][] board=new char[n][n];
-        boolean[] left=new boolean[n];
-        boolean[] leftbot=new boolean[2*n-1];
-        boolean[] leftabo=new boolean[2*n-1];
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                board[i][j]='.';
-            }
-        }
-        possibleQueens(board,n,0,ret,left,leftbot,leftabo);
-        return ret;
+        int[] top=new int[n];
+        List<List<String>> lst=new ArrayList<List<String>>();
+        solve(0,n,top,new int[n][n],lst);
+        return lst;
     }
 }
