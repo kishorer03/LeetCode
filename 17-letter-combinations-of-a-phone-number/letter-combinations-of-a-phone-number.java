@@ -17,7 +17,7 @@ class Solution {
         String[] strarr={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
         List<String> lst=new ArrayList<String>();
         if(digits.equals("")){
-            return new ArrayList<String>();
+            return lst;
         }
         solve(0,0,digits,lst,new StringBuilder(),strarr);
         return lst;
