@@ -1,37 +1,58 @@
 class Solution {
-    public boolean valid(char[][] board,int row,int col,char num){
-        for(int i=0;i<9;i++){
-            if(board[row][i]==num || board[i][col]==num){
+    public boolean possible(int i,int j,int num,char[][] board){
+        for(int x=0;x<=8;x++){
+            if(board[i][x]!='.' && board[i][x]-'0'==num){
                 return false;
             }
-            if(board[((row/3)*3+(i/3))][((col/3)*3+(i%3))]==num){
+        }
+        for(int x=0;x<=8;x++){
+            if(board[x][j]!='.' && board[x][j]-'0'==num){
                 return false;
+            }
+        }
+        int row=i/3,col=j/3;
+        for(int x=0;x<=2;x++){
+            for(int y=0;y<=2;y++){
+                if(board[row*3+x][col*3+y]!='.' && board[row*3+x][col*3+y]-'0'==num){
+                    return false;
+                }
             }
         }
         return true;
     }
-    public boolean fillSudoku(char[][] board,int row,int col){
-        if(row==9){
+    public boolean solve(int i,int j,int num,char[][] board){
+        if(num==10){
+            return false;
+        }
+        if(j==board[0].length){
+            if(solve(i+1,0,1,board)){
+                return true;
+            }
+            return false;
+        }
+        if(i==board.length){
             return true;
         }
-        if(col==9){
-            return fillSudoku(board,row+1,0);
-        }
-        if(board[row][col]!='.'){
-            return fillSudoku(board,row,col+1);
-        }
-        for(int i=1;i<=9;i++){
-            if(valid(board,row,col,(char)(i+'0'))){
-                board[row][col]=(char)(i+'0');
-                if(fillSudoku(board,row,col+1)){
+        if(board[i][j]!='.'){
+            if(solve(i,j+1,1,board)){
+                return true;
+            }
+        }else{
+            
+            if(possible(i,j,num,board)){
+                board[i][j]=(char)('0'+num);
+                if(solve(i,j+1,1,board)){
                     return true;
                 }
-                board[row][col]='.';
+                board[i][j]='.';
+            }
+            if(solve(i,j,num+1,board)){
+                return true;
             }
         }
         return false;
     }
     public void solveSudoku(char[][] board) {
-        fillSudoku(board,0,0);
+        solve(0,0,1,board);
     }
 }
