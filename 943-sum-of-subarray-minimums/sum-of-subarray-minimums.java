@@ -29,16 +29,9 @@ class Solution {
         st_val=new Stack<Integer>();
         st_in=new Stack<Integer>();
         prevSmallest(st_val,st_in,arr,prev);
-        // for(int i:next){
-        //     System.out.print(i+" ");
-        // }
-        // System.out.println();
-        // for(int i:prev){
-        //     System.out.print(i+" ");
-        // }
         long sum=0;
         for(int i=0;i<arr.length;i++){
-            sum+=(((long)(i-prev[i])*(long)(next[i]-i))%(1000000007))*arr[i];
+            sum+=(((long)(i-prev[i])*(next[i]-i))%(1000000007))*arr[i];
             sum%=1000000007;
         }
         return (int)sum;
